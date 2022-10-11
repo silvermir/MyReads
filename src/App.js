@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import BookShelf from "./BookShelf";
-import SearchBook from "./SearchBook";
+import BookSearch from "./BookSearch";
+import { Link, Route, Routes } from "react-router-dom";
 
 class BooksApp extends Component {
   state = {
@@ -21,12 +22,14 @@ class BooksApp extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage === false && <BookShelf />}
-        {this.state.showSearchPage === true && <SearchBook />}
-        <div className="open-search">
-          <button onClick={() => this.setState({ showSearchPage: true })}>
+        <Routes>
+          <Route path="/" element={<BookShelf />} />
+          <Route path="/BookSearch" element={<BookSearch />} />
+        </Routes>
+        <div>
+          <Link to="/BookSearch" className="open-search">
             Add a book
-          </button>
+          </Link>
         </div>
       </div>
     );
