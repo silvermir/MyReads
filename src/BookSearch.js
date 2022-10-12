@@ -22,7 +22,9 @@ class BookSearch extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <ol className="books-grid">
+            <li>test</li>
+          </ol>
         </div>
       </div>
     );

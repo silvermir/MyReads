@@ -23,8 +23,15 @@ class BooksApp extends Component {
     return (
       <div className="app">
         <Routes>
-          <Route path="/" element={<BookShelf />} />
-          <Route path="/BookSearch" element={<BookSearch />} />
+          <Route
+            exact
+            path="/"
+            element={<BookShelf books={this.state.books} />}
+          />
+          <Route
+            path="/BookSearch"
+            element={<BookSearch books={this.state.books} />}
+          />
         </Routes>
         <div>
           <Link to="/BookSearch" className="open-search">

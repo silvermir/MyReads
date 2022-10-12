@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Book from "./Book";
+import Shelf from "./Shelf";
 
 class BookShelf extends Component {
   render() {
@@ -8,16 +8,21 @@ class BookShelf extends Component {
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        <div className="list-books-content" />
-        <div className="bookshelf">
-          <h2 className="bookshelf-title">Read</h2>
-          <div className="bookshelf-books">
-            <ol className="books-grid">
-              <li>
-                <Book />
-              </li>
-            </ol>
-          </div>
+        <div className="list-books-content">
+          <Shelf
+            shelf={"Currently Reading"}
+            books={this.props.books.filter(
+              (b) => b.shelf === "currentlyReading"
+            )}
+          />
+          <Shelf
+            shelf={"Want to Read"}
+            books={this.props.books.filter((b) => b.shelf === "wantToRead")}
+          />
+          <Shelf
+            shelf={"Read"}
+            books={this.props.books.filter((b) => b.shelf === "read")}
+          />
         </div>
       </div>
     );
