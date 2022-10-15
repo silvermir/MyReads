@@ -3,10 +3,6 @@ import { Link } from "react-router-dom";
 import Book from "./Book";
 
 class BookSearch extends Component {
-  updateQuery = (query) => {
-    this.props.updateQuery(query.trim());
-  };
-
   render() {
     return (
       <div className="search-books">
@@ -18,7 +14,9 @@ class BookSearch extends Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              onChange={(e) => this.updateQuery(e.target.value)}
+              onChange={(e) => {
+                this.props.updateQuery(e.target.value);
+              }}
             />
           </div>
         </div>
