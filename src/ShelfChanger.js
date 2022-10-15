@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import * as BooksAPI from "./BooksAPI";
 
 class ShelfChanger extends Component {
+  state = {
+    newShelf: this.props.books.shelf,
+  };
+
   handleShelfChange = async (e) => {
     try {
-      const shelf = e.target.value;
-      const book = this.props.books;
-      const changeShelf = BooksAPI.update(book, shelf);
-      return changeShelf;
+      BooksAPI.update(this.props.books, e.target.value).then((shelf) => {
+        this.setState({
+          newShelf: shelf,
+        });
+      });
     } catch (e) {
       console.log(e);
     }
@@ -16,13 +21,20 @@ class ShelfChanger extends Component {
   render() {
     return (
       <div className="book-shelf-changer">
-        <select onChange={this.handleShelfChange}>
+        <select value={this.state.newShelf} onChange={this.handleShelfChange}>
           <option value="move" disabled>
             Move to...
           </option>
-          <option value="currentlyReading">Currently Reading</option>
-          <option value="wantToRead">Want to Read</option>
-          <option value="read">Read</option>
+          <option value="currentlyReading">
+            {this.props.books.shelf === "currentlyReading" && "\u2713 "}
+            Currently Reading
+          </option>
+          <option value="wantToRead">
+            {this.props.books.shelf === "wantToRead" && "\u2713 "}Want to Read
+          </option>
+          <option value="read">
+            {this.props.books.shelf === "read" && "\u2713 "}Read
+          </option>
           <option value="none">None</option>
         </select>
       </div>

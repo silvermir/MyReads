@@ -3,12 +3,12 @@ import * as BooksAPI from "./BooksAPI";
 import "./App.css";
 import BookShelf from "./BookShelf";
 import BookSearch from "./BookSearch";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 class BooksApp extends Component {
   state = {
     books: [],
-    showSearchPage: false,
+    SearchResults: [],
   };
 
   componentDidMount() {
@@ -18,6 +18,16 @@ class BooksApp extends Component {
       }));
     });
   }
+
+  updateQuery = (query) => {
+    if (!query) {
+      this.setState({ searchResults: "" });
+    } else {
+      BooksAPI.search(query).then((searchResults) => {
+        this.setState({ SearchResults: searchResults });
+      });
+    }
+  };
 
   render() {
     return (
@@ -30,14 +40,14 @@ class BooksApp extends Component {
           />
           <Route
             path="/BookSearch"
-            element={<BookSearch books={this.state.books} />}
+            element={
+              <BookSearch
+                updateQuery={this.updateQuery}
+                foundBooks={this.state.SearchResults}
+              />
+            }
           />
         </Routes>
-        <div>
-          <Link to="/BookSearch" className="open-search">
-            Add a book
-          </Link>
-        </div>
       </div>
     );
   }
