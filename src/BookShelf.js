@@ -12,16 +12,19 @@ class BookShelf extends Component {
         <div className="list-books-content">
           <Shelf
             shelfName={"Currently Reading"}
+            handleShelfChange={this.props.handleShelfChange}
             books={this.props.books.filter(
               (b) => b.shelf === "currentlyReading"
             )}
           />
           <Shelf
             shelfName={"Want to Read"}
+            handleShelfChange={this.props.handleShelfChange}
             books={this.props.books.filter((b) => b.shelf === "wantToRead")}
           />
           <Shelf
             shelfName={"Read"}
+            handleShelfChange={this.props.handleShelfChange}
             books={this.props.books.filter((b) => b.shelf === "read")}
           />
           <div>

@@ -20,13 +20,25 @@ class BooksApp extends Component {
   }
 
   updateQuery = (query) => {
-    if (!query) {
-      this.setState({ searchResults: "" });
-    } else {
-      BooksAPI.search(query).then((searchResults) => {
-        this.setState({ SearchResults: searchResults });
+    if (!query) return "";
+    if (query.length > 2)
+      BooksAPI.search(query).then((res) => {
+        if (!res.error) {
+          this.setState({
+            SearchResults: Array.isArray(res) ? res : [],
+          });
+        }
       });
-    }
+  };
+
+  handleShelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(() =>
+      this.setState((currentState) => ({
+        books: currentState.books
+          .filter((b) => b.id !== book.id)
+          .concat({ ...book, shelf }),
+      }))
+    );
   };
 
   render() {
@@ -36,14 +48,20 @@ class BooksApp extends Component {
           <Route
             exact
             path="/"
-            element={<BookShelf books={this.state.books} />}
+            element={
+              <BookShelf
+                books={this.state.books}
+                handleShelfChange={this.handleShelfChange}
+              />
+            }
           />
           <Route
             path="/BookSearch"
             element={
               <BookSearch
                 updateQuery={this.updateQuery}
-                foundBooks={this.state.SearchResults}
+                handleShelfChange={this.handleShelfChange}
+                books={this.state.SearchResults}
               />
             }
           />

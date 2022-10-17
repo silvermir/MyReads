@@ -13,17 +13,18 @@ class BookSearch extends Component {
           <div className="search-books-input-wrapper">
             <input
               type="text"
-              placeholder="Search by title or author"
-              onChange={(e) => {
-                this.props.updateQuery(e.target.value);
-              }}
+              placeholder="Search by Search Terms"
+              onChange={(e) => this.props.updateQuery(e.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
             <li>
-              <Book books={this.props.foundBooks} />
+              <Book
+                books={this.props.books}
+                handleShelfChange={this.props.handleShelfChange}
+              />
             </li>
           </ol>
         </div>

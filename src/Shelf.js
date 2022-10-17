@@ -9,7 +9,10 @@ class Shelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             <li>
-              <Book books={this.props.books} />
+              <Book
+                books={this.props.books}
+                handleShelfChange={this.props.handleShelfChange}
+              />
             </li>
           </ol>
         </div>
