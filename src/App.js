@@ -64,7 +64,7 @@ class BooksApp extends Component {
             }
           />
           <Route
-            path="/BookSearch"
+            path="/search"
             element={
               <BookSearch
                 updateQuery={this.updateQuery}

@@ -28,7 +28,7 @@ class BookShelf extends Component {
             books={this.props.books.filter((b) => b.shelf === "read")}
           />
           <div>
-            <Link to="/BookSearch" className="open-search">
+            <Link to="/search" className="open-search">
               Add a book
             </Link>
           </div>
