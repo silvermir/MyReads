@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import * as BooksAPI from "./BooksAPI";
 import "./App.css";
-import BookShelf from "./BookShelf";
-import BookSearch from "./BookSearch";
+import BookShelf from "./Components/BookShelf";
+import BookSearch from "./Components/BookSearch";
 import { Route, Routes } from "react-router-dom";
 
 class BooksApp extends Component {
@@ -20,15 +20,23 @@ class BooksApp extends Component {
   }
 
   updateQuery = (query) => {
-    if (!query) return "";
-    if (query.length > 2)
+    if (query.length >= 3) {
       BooksAPI.search(query).then((res) => {
-        if (!res.error) {
-          this.setState({
-            SearchResults: Array.isArray(res) ? res : [],
-          });
+        if (!res || res.error) {
+          this.setState({ SearchResults: [] });
+          return;
         }
+        const foundBooks = res.map((b) => {
+          this.state.books.forEach((book) => {
+            if (book.id === b.id) b.shelf = book.shelf;
+          });
+          return b;
+        });
+        this.setState({ SearchResults: foundBooks });
       });
+    } else {
+      this.setState({ SearchResults: [] });
+    }
   };
 
   handleShelfChange = (book, shelf) => {
